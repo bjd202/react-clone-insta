@@ -186,7 +186,7 @@ function Header() {
                     <Route exact path="/board" component={Board} />
                     <Route exact path="/board/:id" component={BoardRead} />
                     <Route exact path="/board-write" component={BoardWrite} />
-                    <Route exact path="/board-edit" component={BoardEdit} />
+                    <Route exact path="/board-edit/:id" component={BoardEdit} />
                     <Route path="/profile" component={Profile} />
                 </Switch>
             </main>

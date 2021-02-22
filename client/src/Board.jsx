@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
 import Pagination from '@material-ui/lab/Pagination';
 import Button from '@material-ui/core/Button';
+import axios from 'axios'
 
 const useStyles = makeStyles({
     root: {
@@ -67,7 +68,7 @@ const columns = [
     },
 ];
 
-const rows = [
+let rows = [
     { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
@@ -83,7 +84,14 @@ const rows = [
 
 function Board(props) {
     const {history} = props
-    console.dir(history)
+
+    useEffect(() => {
+        async function getList(){
+            const result = await axios.get('/board/list');
+            console.dir(result)
+        }
+        getList()
+    }, [])
 
     const onRowClick = (param) => {
         console.log(param)

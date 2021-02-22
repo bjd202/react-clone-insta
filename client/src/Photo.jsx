@@ -162,6 +162,14 @@ function Photo() {
                                 {/* <Divider orientation="vertical" flexItem /> */}
 
                                 <Grid item xs={6} sm={6} md={6} lg={6}>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Lizard
+                                    </Typography>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
+                                        across all continents except Antarctica
+                                    </Typography>
+
                                     <List>
                                         <ListItem alignItems="flex-start">
                                             <ListItemAvatar>
