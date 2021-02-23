@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
 import PropTypes from 'prop-types';
@@ -7,6 +7,7 @@ import { DataGrid } from '@material-ui/data-grid';
 import Pagination from '@material-ui/lab/Pagination';
 import Button from '@material-ui/core/Button';
 import axios from 'axios'
+import moment from 'moment'
 
 const useStyles = makeStyles({
     root: {
@@ -48,50 +49,54 @@ CustomPagination.propTypes = {
 };
 
 const columns = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'firstName', headerName: 'First name', width: 130 },
-    { field: 'lastName', headerName: 'Last name', width: 130 },
-    {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 90,
+    { field: 'id', headerName: 'ID', flex: 0.3 },
+    { field: 'title', headerName: '제목', flex: 1 },
+    { 
+        field: 'ins_dt', 
+        headerName: '작성일', 
+        flex: 1,
+        valueFormatter: (params) => moment(params.value).format('YYYY-MM-DD HH:mm:ss')
     },
     {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
-        width: 160,
-        valueGetter: (params) =>
-            `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
+        field: 'upt_dt',
+        headerName: '수정일',
+        flex: 1,
+        valueFormatter: (params) => moment(params.value).format('YYYY-MM-DD HH:mm:ss')
     },
+    {
+        field: 'ins_user',
+        headerName: '작성자',
+        flex: 1,
+    },
+    {
+        field: 'upt_user',
+        headerName: '수정자',
+        flex: 1,
+    }
 ];
 
-let rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 10, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    { id: 11, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+let rows = [];
 
 function Board(props) {
     const {history} = props
+    const [Rows, setRows] = useState([])
 
-    useEffect(() => {
-        async function getList(){
-            const result = await axios.get('/board/list');
-            console.dir(result)
+    useEffect( () => {
+        const datas = async () => {
+          try {
+            setRows([])
+    
+            const response = await axios.get('/api/board/list')
+    
+            rows = response.data.data
+            setRows(response.data.data)
+          } catch (error) {
+            alert(error)
+          }
         }
-        getList()
-    }, [])
+    
+        datas()
+      }, [])
 
     const onRowClick = (param) => {
         console.log(param)

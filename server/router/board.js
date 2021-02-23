@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const conn = require('../dbconnection')
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
@@ -8,27 +9,14 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.get('/list', function(req, res) {
-    const list = [
-        {
-            id: 1,
-            title: 'title1',
-            ins_dt: Date.now(),
-            upt_dt: Date.now()
-        },
-        {
-            id: 2,
-            title: 'title2',
-            ins_dt: Date.now(),
-            upt_dt: Date.now()
-        },
-        {
-            id: 3,
-            title: 'title3',
-            ins_dt: Date.now(),
-            upt_dt: Date.now()
-        },
-    ]
-    res.json({data: list})
+    conn.query('select * from board', (err, rows) => {
+        if(err){
+            console.error(err)
+        }else{
+            console.dir(rows)
+            res.json({'data': rows})
+        }
+    })
 });
 
 router.get('/read/:id', function(req, res) {

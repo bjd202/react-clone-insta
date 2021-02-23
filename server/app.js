@@ -12,11 +12,11 @@ app.use(bodyParser.json())
 
 const board = require('./router/board')
 
-app.use('/board', board)
+app.use('/api/board', board)
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 
 app.listen(port, () => {
