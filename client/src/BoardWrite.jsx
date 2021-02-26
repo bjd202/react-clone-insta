@@ -4,6 +4,7 @@ import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +30,22 @@ function BoardWrite(props) {
     }
 
     const onClickSave = () => {
+        axios.post('/api/board/insert', {
+            title: Title,
+            content: Content
+        })
+        .then((res) => {
+            console.dir(res)
+            if(res.data.result === 'success'){
+                history.push('/board')
+            }else{
+                alert('저장 실패')
+            }
 
+        })
+        .catch((err) => {
+            alert('저장 실패')
+        })
     }
 
     const onClickCancel = () => {

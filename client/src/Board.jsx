@@ -86,7 +86,7 @@ function Board(props) {
           try {
             setRows([])
     
-            const response = await axios.get('/api/board/list')
+            const response = await axios.post('/api/board/list')
     
             rows = response.data.data
             setRows(response.data.data)
