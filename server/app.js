@@ -11,8 +11,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const board = require('./router/board')
+const user = require('./router/user')
+const board_reply = require('./router/board_reply')
 
 app.use('/api/board', board)
+app.use('/api/user', user)
+app.use('/api/board_reply', board_reply)
 
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')

@@ -32,7 +32,7 @@ router.post('/read', function(req, res) {
 });
 
 router.post('/insert', function(req, res) {
-    conn.query(`insert into board (title, content, ins_dt, upt_dt, ins_user, upt_user) values ('${req.body.title}', '${req.body.content}', now(), now(), 'admin', 'admin')`, (err, result) => {
+    conn.query(`insert into board (title, content, ins_dt, upt_dt, ins_user, upt_user) values ('${req.body.title}', '${req.body.content}', now(), now(), '${req.body.username}', '${req.body.username}')`, (err, result) => {
         if(err){
             res.json({'result': 'fail'})
             throw err
@@ -43,12 +43,28 @@ router.post('/insert', function(req, res) {
     })
 });
 
-router.post('/update/:id', function(req, res) {
-  
+router.post('/update', function(req, res) {
+    conn.query(`update board set title='${req.body.title}', content='${req.body.content}', upt_dt=now(), upt_user='update_user' where id='${req.body.id}'`, (err, result) => {
+        if(err){
+            res.json({'result': 'fail'})
+            throw err
+        }else{
+            console.log(result)
+            res.json({'result': 'success'})
+        }
+    })
 });
 
-router.post('/delete/:id', function(req, res) {
-  
+router.post('/delete', function(req, res) {
+    conn.query(`delete from board where id='${req.body.id}'`, (err, result) => {
+        if(err){
+            res.json({'result': 'fail'})
+            throw err
+        }else{
+            console.log(result)
+            res.json({'result': 'success'})
+        }
+    })
 });
 
 module.exports = router;

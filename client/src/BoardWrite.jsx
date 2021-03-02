@@ -32,7 +32,8 @@ function BoardWrite(props) {
     const onClickSave = () => {
         axios.post('/api/board/insert', {
             title: Title,
-            content: Content
+            content: Content,
+            username: JSON.parse(localStorage.getItem('user')).username
         })
         .then((res) => {
             console.dir(res)

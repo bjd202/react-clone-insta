@@ -4,7 +4,10 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+
 import axios from 'axios'
+
+import BoardReply from './BoardReply'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,8 +20,11 @@ const useStyles = makeStyles((theme) => ({
 function BoardRead(props) {
     const {history, match} = props
     const classes = useStyles();
+    
+    const username = JSON.parse(localStorage.getItem('user')).username
 
     const [Board, setBoard] = useState({})
+    
 
     useEffect( () => {
         axios.post('/api/board/read', {
@@ -41,6 +47,17 @@ function BoardRead(props) {
         history.push('/board')
     }
 
+    const onClickDelete = () => {
+        axios.post(`/api/board/delete`, Board)
+        .then((res) => {
+            console.dir(res)
+            history.push('/board')
+        })
+        .catch((err) => {
+            alert(err)
+        })
+    }
+
     return (
         <React.Fragment>
             <CssBaseline />
@@ -53,13 +70,24 @@ function BoardRead(props) {
                 </Typography>
 
                 <div className={classes.root}>
-                    <Button variant="contained" color="primary" onClick={onClickEdit}>
-                        수정
-                    </Button>
+                    {
+                        username === Board.ins_user ? 
+                        <Button variant="contained" color="primary" onClick={onClickEdit}>
+                            수정
+                        </Button> : ''
+                    }
+                    {
+                        username === Board.ins_user ? 
+                        <Button variant="contained" color="secondary" onClick={onClickDelete}>
+                            삭제
+                        </Button> : ''
+                    }
                     <Button variant="contained" color="primary" onClick={onClickList}>
                         목록
                     </Button>
                 </div>
+
+                <BoardReply board_id={match.params.id} />
             </Container>
         </React.Fragment>
     )

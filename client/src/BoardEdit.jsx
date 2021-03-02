@@ -22,8 +22,13 @@ function BoardEdit(props) {
     const [Content, setContent] = useState("")
 
     const [Board, setBoard] = useState({
+        content: '',
+        id: '',
+        ins_dt: '',
+        ins_user: '',
         title: '',
-        content: ''
+        upt_dt: '',
+        upt_user: ''
     })
 
     useEffect( () => {
@@ -39,25 +44,24 @@ function BoardEdit(props) {
         })
     }, [])
 
-    const handleTitle = (e) => {
-        setTitle(e.target.value)
-    }
-
-    const handleContent = (e) => {
-        setContent(e.target.value)
-    }
-
     const handleOnChange = (e) => {
-        const value = e.target.value
+        const {value, name} = e.target
     
         setBoard({
             ...Board,
-            [e.taget.name]: value
+            [name]: value
         })
     }
 
     const onClickSave = () => {
-
+        axios.post(`/api/board/update`, Board)
+        .then((res) => {
+            console.dir(res)
+            history.push(`/board/${match.params.id}`)
+        })
+        .catch((err) => {
+            alert(err)
+        })
     }
 
     const onClickCancel = () => {
