@@ -21,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
     inline: {
       display: 'inline',
     },
+    btn: {
+        '& > *': {
+            margin: theme.spacing(1)
+        }
+    }
 }));
 
 
@@ -65,6 +70,23 @@ function BoardReply(props) {
         })
     }
 
+    const onClickEditReply = () => {
+
+    }
+
+    const onClickDeleteReply = id => e => {
+        console.log(id)
+        axios.post('/api/board_reply/delete', {
+            id: id
+        })
+        .then((res) => {
+            setReply(Reply.filter(item => item.id !== id))
+        })
+        .catch((err) => {
+            alert(err)
+        })
+    }
+
     return (
         <div>
             <TextField label="댓글 내용" variant="outlined" fullWidth margin="normal" multiline rows={3} rowsMax={8} onChange={onChangeReplyContent} />
@@ -95,6 +117,20 @@ function BoardReply(props) {
                                     </React.Fragment>
                                 }
                             />
+
+                            {
+                                (item.ins_user == JSON.parse(localStorage.getItem('user')).username) ? 
+                                <div className={classes.btn}>
+                                    <Button variant="contained" color="primary" onClick={onClickEditReply}>
+                                        수정
+                                    </Button>
+                                    <Button variant="contained" color="secondary" onClick={onClickDeleteReply(item.id)}>
+                                        삭제
+                                    </Button>
+                                </div> : '' 
+                            }
+                            
+                            
                         </ListItem>
                         <Divider variant="inset" component="li" />
                     </React.Fragment>

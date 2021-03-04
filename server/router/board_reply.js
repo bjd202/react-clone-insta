@@ -36,4 +36,16 @@ router.post('/insert', (req, res) => {
     })
 })
 
+router.post('/delete', (req, res) => {
+    conn.query(`delete from board_reply where id=${req.body.id}`, (err, result) => {
+        if(err){
+            res.json({'result': 'fail'})
+            throw err
+        }else{
+            console.log(result)
+            res.json({'result': 'success'})
+        }
+    })
+})
+
 module.exports = router
