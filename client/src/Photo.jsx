@@ -117,7 +117,7 @@ const DialogActions = withStyles((theme) => ({
     },
 }))(MuiDialogActions);
 
-function Photo() {
+function Photo({history}) {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
 
@@ -129,14 +129,24 @@ function Photo() {
     const handleClickOpen = () => {
         setOpen(true);
     };
+
     const handleClose = () => {
         setOpen(false);
     };
+
+    const onClickWriteBtn = () => {
+        history.push('/photo/write')
+    }
 
     return (
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="md">
+
+                <Button variant="contained" color="primary" onClick={onClickWriteBtn}>
+                    작성
+                </Button>
+                
                 <div className={classes.root}>
                     <GridList cellHeight={160} className={classes.gridList} cols={3}>
                         {tileData.map((tile, i) => (

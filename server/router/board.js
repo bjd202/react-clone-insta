@@ -9,7 +9,7 @@ router.use(function timeLog(req, res, next) {
 });
 
 router.post('/list', function(req, res) {
-    conn.query('select * from board', (err, rows) => {
+    conn.query('select * from board order by id desc', (err, rows) => {
         if(err){
             throw err
         }else{

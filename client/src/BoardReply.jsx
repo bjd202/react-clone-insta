@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
+let upt_id = 0
 
 function BoardReply(props) {
 
@@ -70,10 +70,6 @@ function BoardReply(props) {
         })
     }
 
-    const onClickEditReply = () => {
-
-    }
-
     const onClickDeleteReply = id => e => {
         console.log(id)
         axios.post('/api/board_reply/delete', {
@@ -101,6 +97,7 @@ function BoardReply(props) {
                             <ListItemAvatar>
                                 <Avatar alt={item.ins_user} src="/static/images/avatar/1.jpg" />
                             </ListItemAvatar>
+
                             <ListItemText
                                 primary={moment(item.ins_dt).format('YYYY-MM-DD HH:mm:ss')}
                                 secondary={
@@ -116,19 +113,17 @@ function BoardReply(props) {
                                         {item.content}
                                     </React.Fragment>
                                 }
-                            />
+                            /> 
 
                             {
                                 (item.ins_user == JSON.parse(localStorage.getItem('user')).username) ? 
                                 <div className={classes.btn}>
-                                    <Button variant="contained" color="primary" onClick={onClickEditReply}>
-                                        수정
-                                    </Button>
                                     <Button variant="contained" color="secondary" onClick={onClickDeleteReply(item.id)}>
                                         삭제
                                     </Button>
                                 </div> : '' 
                             }
+
                             
                             
                         </ListItem>

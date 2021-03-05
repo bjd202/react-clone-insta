@@ -24,6 +24,7 @@ import DeveloperBoardIcon from '@material-ui/icons/DeveloperBoard';
 
 import Dashboard from './Dashboard'
 import Photo from './Photo'
+import PhotoWrite from './PhotoWrite'
 import Board from './Board'
 import Profile from './Profile'
 import BoardRead from './BoardRead'
@@ -183,7 +184,8 @@ function Header() {
                 
                 <Switch>
                     <Route exact path="/" component={Dashboard} />
-                    <Route path="/photo" component={Photo} />
+                    <Route exact path="/photo" component={Photo} />
+                    <Route path="/photo/write" component={PhotoWrite} />
                     <Route exact path="/board" component={Board} />
                     <Route exact path="/board/:id" component={BoardRead} />
                     <Route exact path="/board-write" component={BoardWrite} />
