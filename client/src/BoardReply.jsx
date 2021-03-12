@@ -116,7 +116,7 @@ function BoardReply(props) {
                             /> 
 
                             {
-                                (item.ins_user == JSON.parse(localStorage.getItem('user')).username) ? 
+                                (item.ins_user === JSON.parse(localStorage.getItem('user')).username) ? 
                                 <div className={classes.btn}>
                                     <Button variant="contained" color="secondary" onClick={onClickDeleteReply(item.id)}>
                                         삭제
