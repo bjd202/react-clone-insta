@@ -22,9 +22,10 @@ function PhotoWrite() {
 
     const [Photo, setPhoto] = useState({
         title: '',
-        content: '',
-        images: ''
+        content: ''
     })
+
+    const [Files, setFiles] = useState([])
 
     const handlePhoto = e => {
         const {name, value} = e.target
@@ -36,12 +37,17 @@ function PhotoWrite() {
     }
 
     const onClickSave = e => {
-
+        
     }
 
     const onClickCancel = e => {
         
     }
+
+    const onChangeFiles = files => {
+        setFiles(files)
+    }
+
 
     return (
         <React.Fragment>
@@ -51,10 +57,17 @@ function PhotoWrite() {
                     <div>
                         <TextField name="title" required id="outlined-required" label="제목" variant="outlined" fullWidth margin="normal" onChange={handlePhoto} />
                         <TextField name="content" required label="내용" variant="outlined" fullWidth margin="normal" multiline rows={8} rowsMax={8} onChange={handlePhoto} />
-                        <DropzoneArea />
+                        <DropzoneArea 
+                            acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                            showPreviews={true}
+                            showPreviewsInDropzone={false}
+                            filesLimit={6}
+                            showFileNamesInPreview={true}
+                            onChange={onChangeFiles}
+                        />
                     </div>
 
-                    <div className={classes.root}>
+                    <div className={classes.root} style={{marginTop: '30px'}}>
                         <Button variant="contained" color="primary" onClick={onClickSave}>
                             저장
                         </Button>
