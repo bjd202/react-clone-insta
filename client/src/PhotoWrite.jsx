@@ -37,7 +37,30 @@ function PhotoWrite() {
     }
 
     const onClickSave = e => {
+        console.dir(Photo)
+        console.dir(Files)
+
+        const formData = new FormData()
+        formData.append('title', Photo.title)
+        formData.append('content', Photo.content)
+        formData.append('username', JSON.parse(localStorage.getItem('user')).username)
         
+        for (let i = 0; i < Files.length; i++) {
+            formData.append('file', Files[i])
+        }
+
+        axios.post('/api/photo/insert', formData)
+        .then(res => {
+            console.dir(res)
+            if(res.data.result === 'success'){
+                // history.push('/photo')
+            }else{
+                alert('저장 실패')
+            }
+        })
+        .catch(err => {
+            alert('저장 실패')
+        })
     }
 
     const onClickCancel = e => {
@@ -53,7 +76,7 @@ function PhotoWrite() {
         <React.Fragment>
             <CssBaseline />
             <Container maxWidth="md">
-                <form noValidate autoComplete="off">
+                <form noValidate autoComplete="off" encType="multipart/form-data">
                     <div>
                         <TextField name="title" required id="outlined-required" label="제목" variant="outlined" fullWidth margin="normal" onChange={handlePhoto} />
                         <TextField name="content" required label="내용" variant="outlined" fullWidth margin="normal" multiline rows={8} rowsMax={8} onChange={handlePhoto} />

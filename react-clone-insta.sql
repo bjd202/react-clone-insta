@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `board` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 react-clone-insta.board:~8 rows (대략적) 내보내기
+-- 테이블 데이터 react-clone-insta.board:~7 rows (대략적) 내보내기
 DELETE FROM `board`;
 /*!40000 ALTER TABLE `board` DISABLE KEYS */;
 INSERT INTO `board` (`id`, `title`, `content`, `ins_dt`, `upt_dt`, `ins_user`, `upt_user`) VALUES
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `board_reply` (
   CONSTRAINT `FK__board` FOREIGN KEY (`board_id`) REFERENCES `board` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
--- 테이블 데이터 react-clone-insta.board_reply:~0 rows (대략적) 내보내기
+-- 테이블 데이터 react-clone-insta.board_reply:~4 rows (대략적) 내보내기
 DELETE FROM `board_reply`;
 /*!40000 ALTER TABLE `board_reply` DISABLE KEYS */;
 INSERT INTO `board_reply` (`id`, `board_id`, `content`, `ins_dt`, `upt_dt`, `ins_user`, `upt_user`) VALUES
@@ -68,6 +68,58 @@ INSERT INTO `board_reply` (`id`, `board_id`, `content`, `ins_dt`, `upt_dt`, `ins
 	(3, 9, 'bb', '2021-03-02 19:19:45', '2021-03-02 19:19:45', 'admin', 'admin'),
 	(4, 9, 'bn', '2021-03-02 19:23:13', '2021-03-02 19:23:13', 'admin', 'admin');
 /*!40000 ALTER TABLE `board_reply` ENABLE KEYS */;
+
+-- 테이블 react-clone-insta.photo 구조 내보내기
+DROP TABLE IF EXISTS `photo`;
+CREATE TABLE IF NOT EXISTS `photo` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(500) NOT NULL,
+  `content` varchar(500) NOT NULL,
+  `ins_dt` datetime NOT NULL,
+  `upt_dt` datetime NOT NULL,
+  `ins_user` varchar(50) NOT NULL DEFAULT '',
+  `upt_user` varchar(50) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- 테이블 데이터 react-clone-insta.photo:~5 rows (대략적) 내보내기
+DELETE FROM `photo`;
+/*!40000 ALTER TABLE `photo` DISABLE KEYS */;
+INSERT INTO `photo` (`id`, `title`, `content`, `ins_dt`, `upt_dt`, `ins_user`, `upt_user`) VALUES
+	(1, 'asdf', 'sfad', '2021-03-14 17:10:51', '2021-03-14 17:10:51', 'admin', 'admin'),
+	(2, 'asdf', 'sfad', '2021-03-14 17:11:56', '2021-03-14 17:11:56', 'admin', 'admin'),
+	(3, 'asdf', 'sfad', '2021-03-14 17:12:44', '2021-03-14 17:12:44', 'admin', 'admin'),
+	(4, 'asdf', 'asfd', '2021-03-14 17:15:25', '2021-03-14 17:15:25', 'admin', 'admin'),
+	(5, 'asdf', 'asfd', '2021-03-14 17:33:10', '2021-03-14 17:33:10', 'admin', 'admin');
+/*!40000 ALTER TABLE `photo` ENABLE KEYS */;
+
+-- 테이블 react-clone-insta.photo_file 구조 내보내기
+DROP TABLE IF EXISTS `photo_file`;
+CREATE TABLE IF NOT EXISTS `photo_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `filename` varchar(500) NOT NULL,
+  `originalname` varchar(500) NOT NULL,
+  `size` int(11) NOT NULL,
+  `mimetype` varchar(50) NOT NULL,
+  `destination` varchar(500) NOT NULL,
+  `photo_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_photo_file_photo` (`photo_id`),
+  CONSTRAINT `FK_photo_file_photo` FOREIGN KEY (`photo_id`) REFERENCES `photo` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- 테이블 데이터 react-clone-insta.photo_file:~7 rows (대략적) 내보내기
+DELETE FROM `photo_file`;
+/*!40000 ALTER TABLE `photo_file` DISABLE KEYS */;
+INSERT INTO `photo_file` (`id`, `filename`, `originalname`, `size`, `mimetype`, `destination`, `photo_id`) VALUES
+	(1, '37a021b44b75013ba86f4f480b50f83b', '캡처.PNG', 21035, 'image/png', 'upload/', 3),
+	(2, 'e4d235bb014f7d539f8fd32554011022', '유리병 이미지 연습용 jpg.jpg', 68905, 'image/jpeg', 'upload/', 3),
+	(3, '430266382ca86217f4e3f51328cca788', '속성.PNG', 3561, 'image/png', 'upload/', 3),
+	(4, 'f15c64baefb68707468ec9dc3ac27c4c', 'file_menu_notepad.png', 335, 'image/png', 'upload/', 4),
+	(5, '91d46149f61bdda5a2659addddadabab', 'A_button.png', 463, 'image/png', 'upload/', 4),
+	(6, '1fdf403a66ef782dfc2186e98fbd230b', 'file_menu_notepad.png', 335, 'image/png', 'upload/', 5),
+	(7, '0d4c4bf0b6842a1bf595f5bf6f91019a', 'A_button.png', 463, 'image/png', 'upload/', 5);
+/*!40000 ALTER TABLE `photo_file` ENABLE KEYS */;
 
 -- 테이블 react-clone-insta.user 구조 내보내기
 DROP TABLE IF EXISTS `user`;
